@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABadBulbapediaClone</title>
+</head>
+
+<body>
+    <select name=generation method="GET" action="/">
+        {% for generation in generations %}
+        <option value="{{ generation }}" SELECTED>{{ generation }}</option>
+        {% endfor %}
+    </select>
+</body>
+
+</html>
