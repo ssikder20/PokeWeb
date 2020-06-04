@@ -35,6 +35,7 @@ def gen_read():
     return generations
 
 def get_gen(dict):
+    '''
     arr = []
     i = 1
     for k in dict.keys():
@@ -42,3 +43,5 @@ def get_gen(dict):
         i += 1
     
     return arr
+    '''
+    return [i for i in dict.keys()]
