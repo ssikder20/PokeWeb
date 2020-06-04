@@ -8,11 +8,32 @@
 </head>
 
 <body>
-    <select name=generation method="GET" action="/">
-        {% for generation in generations %}
-        <option value="{{ generation }}" SELECTED>{{ generation }}</option>
-        {% endfor %}
-    </select>
+    <form method="POST" style="align-items: center;">
+        {{ form.csrf_token }}
+        {{ form.generation }}
+        {{ form.pokemon }}
+        <input type="submit" value="submit" />
+    </form>
 </body>
+
+<script>
+    let generation_select = document.getElementById('generation')
+    let pokemon_select = document.getElementById('pokemon')
+
+    generation_select.onchange = function () {
+        generation = generation_select.value;
+
+        fetch('/pokemon/' + generation).then(function (response) {
+            response.json().then(function (data) {
+                let optionHTML = '';
+                for (let pokermons of data.pokemon) {
+                    optionHTML += '<option value=' + pokermons.nat_dex + '>' + pokermons.name + '</option>'
+                }
+
+                pokemon_select.innerHTML = optionHTML;
+            })
+        });
+    }
+</script>
 
 </html>

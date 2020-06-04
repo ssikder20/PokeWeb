@@ -1,17 +1,35 @@
-from flask import render_template
 from app import app
+from flask import render_template, request, jsonify
+from flask_wtf import FlaskForm
+from wtforms import SelectField
+from app.generation import *
 
-generations = [
-    "Generation 1",
-    "Generation 2",
-    "Generation 3",
-    "Generation 4",
-    "Generation 5",
-    "Generation 6",
-    "Generation 7"
-]
+gen_pokemon = gen_read()
+generations = get_gen(gen_pokemon)
 
-@app.route('/')
-@app.route('/home')
-def home():
-    return render_template('home.html', generations=generations)
+class Form(FlaskForm):
+    generation = SelectField('generation', choices=generations)
+    pokemon = SelectField('pokemon', choices=[])
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    form = Form()
+
+    if request.method == 'POST':
+        pokemon = form.pokemon.data
+        return f"<h1>Generation: {form.generation.data}, Pokemon: {pokemon}</h1>"
+
+    return render_template('home.html', form=form)
+
+@app.route('/pokemon/<generation>')
+def get_pokemon(generation):
+    pokemons = gen_pokemon[generation]
+
+    pokemon_arr = []
+    for pokemon in pokemons:
+        pokeObj = {}
+        pokeObj['nat_dex'] = pokemon[0]
+        pokeObj['name'] = pokemon[1]
+        pokemon_arr.append(pokeObj)
+    
+    return jsonify({'pokemon' : pokemon_arr})

@@ -1,6 +1,6 @@
 # PokeWeb
 
-A bad Bulbapedia clone with less features :)
+A bad Bulbapedia clone with less features and only pokemon :)
 
 ## Modules Used
 * Flask
