@@ -1,4 +1,4 @@
-# PokeWeb
+# Bulbabadeia
 
 A bad Bulbapedia clone with less features and only pokemon :)
 
