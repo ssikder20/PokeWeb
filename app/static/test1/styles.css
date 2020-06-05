@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+* {
+    color: #F3F3F4;
+    background-color: #242423;
+}
+
+body {
+    background-color: #242423;
+    font-family: 'Quicksand', sans-serif;
+}
+
+form {
+    padding-top: 1%;
+    text-align: center;
+}
+
+#home select {
+    font-family: monospace;
+    font-size: 18px;
+}
+
+#title {
+    text-align: center;
+    animation: fadeInAnimation;
+}
+
+#submit {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #242423;
+    background-color: #E3C567;
+}
+
+#description {
+    font-size: 14px;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.animate {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fadeInUp {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}

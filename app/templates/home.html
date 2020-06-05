@@ -4,11 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Bad Bulbapedia Clone</title>
+
+    <title>Bulbabadeia</title>
+    <link rel="icon" href='static/img/normal_pokeball.svg'>
+    <!--The directory is named test1 because static files aren't
+        meant to be changed so if you keep it in the same directory,
+        it reverts to a previous version of the css file-->
+    <link rel="stylesheet" href="static/test1/styles.css">
+    <script src="static/scripts/scripts.js"></script>
 </head>
 
-<body>
-    <form>
+<body id="home">
+    <div class="animate fadeInUp">
+        <h1 id="title">Welcome to Bulba(bad)eia!</h1>
+    </div>
+    <p style="text-align: center; font-size: 8px;">Haha get it because it's Bulbapedia but bad. Haha... ah nevermind</p>
+
+    <div id="description">
+        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sem ligula, porta nec tempor a, tempus eget
+            dolor. Vivamus mi ex, faucibus sed mollis sed, dignissim at massa. Sed ac rutrum dui. Mauris tempor dictum
+            velit vitae ornare. Phasellus sit amet aliquet ex. Donec semper ex at metus mattis maximus. Ut eget dui
+            ullamcorper, vulputate sem id, blandit metus. Class aptent taciti sociosqu ad litora torquent per conubia
+            nostra, per inceptos himenaeos. Mauris varius est et est laoreet, eget suscipit metus venenatis. Nullam
+            rhoncus metus id magna fringilla, in ullamcorper nulla finibus. Duis in odio tempor, suscipit velit et,
+            elementum nisl. Vestibulum quis egestas elit. Duis ut nulla at leo rutrum cursus. Suspendisse nec orci
+            tincidunt, ultricies diam sed, vehicula neque.</h3>
+    </div>
+
+    <!--Select fields for generation and pokemon-->
+    <form method="POST">
         <p>Generation:
             <select id="generation" name="generation" method="GET" action="/">
                 {% for generation in generations %}
@@ -25,28 +49,12 @@
             </select>
         </p>
 
-        <input type="submit" value="submit" />
+        <input id="submit" type="submit" value="Submit" />
     </form>
 </body>
 
-<script>
-    let generation_select = document.getElementById('generation')
-    let pokemon_select = document.getElementById('pokemon')
-
-    generation_select.onchange = function () {
-        generation = generation_select.value;
-
-        fetch('/pokemon/' + generation).then(function (response) {
-            response.json().then(function (data) {
-                let optionHTML = '';
-                for (let pokermons of data.pokemon) {
-                    optionHTML += '<option value=' + pokermons.nat_dex + '>' + pokermons.name + '</option>'
-                }
-
-                pokemon_select.innerHTML = optionHTML;
-            })
-        });
-    }
+<script type="text/javascript">
+    update_pokemon(); // pokemon select field becomes dynamic
 </script>
 
 </html>

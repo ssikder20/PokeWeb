@@ -7,14 +7,14 @@ generations = get_gen(gen_pokemon)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    pokemons = ["Please choose a generation, then a pokemon"]
+    #pokemons = ["Please choose a generation, then a pokemon"]
 
     if request.method == 'POST':
         generation = request.form.get('generation')
         pokemon = request.form.get('pokemon')
         return f"<h1>Generation: {generation}, Pokemon: {pokemon}</h1>"
 
-    return render_template('home.html', generations=generations, pokemons=pokemons)
+    return render_template('home.html', generations=generations)
 
 @app.route('/pokemon/<generation>')
 def get_pokemon(generation):
