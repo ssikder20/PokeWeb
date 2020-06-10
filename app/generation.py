@@ -1,8 +1,7 @@
-from pokepy import V2Client
-
-client = V2Client()
-
 def gen_update():
+    from pokepy import V2Client
+
+    client = V2Client()
     generations = {
         "Generation 1": [(i, client.get_pokemon(i).name.title()) for i in range(1, 152)],
         "Generation 2": [(i, client.get_pokemon(i).name.title()) for i in range(152, 252)],
@@ -35,13 +34,4 @@ def gen_read():
     return generations
 
 def get_gen(dict):
-    '''
-    arr = []
-    i = 1
-    for k in dict.keys():
-        arr.append((k, k))
-        i += 1
-    
-    return arr
-    '''
     return [i for i in dict.keys()]

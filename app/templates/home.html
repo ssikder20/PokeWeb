@@ -7,11 +7,11 @@
 
     <title>Bulbabadeia</title>
     <link rel="icon" href='static/img/normal_pokeball.svg'>
-    <!--The directory is named test1 because static files aren't
+    <!--The directory is named test1 and script 1 because static files aren't
         meant to be changed so if you keep it in the same directory,
-        it reverts to a previous version of the css file-->
-    <link rel="stylesheet" href="static/test1/styles.css">
-    <script src="static/scripts/scripts.js"></script>
+        it reverts to a previous version of the file-->
+    <link rel="stylesheet" href="static/test2/styles.css">
+    <script src="static/script1/scripts.js"></script>
 </head>
 
 <body id="home">
@@ -51,10 +51,13 @@
 
         <input id="submit" type="submit" value="Submit" />
     </form>
+
+    <img id="pokemon_image" src="static/img/pokeball_but_with_blue.svg" alt="image of pokemon in select field">
 </body>
 
 <script type="text/javascript">
     update_pokemon(); // pokemon select field becomes dynamic
+    update_pokemon_image(); // dynamically updates the image underneath select field
 </script>
 
 </html>

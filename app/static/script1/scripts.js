@@ -17,3 +17,18 @@ function update_pokemon() {
         });
     }
 }
+
+function update_pokemon_image() {
+    let pokemon_select = document.getElementById('pokemon')
+    let pokemon_image = document.getElementById('pokemon_image')
+
+    pokemon_select.onchange = function () {
+        pokemon = pokemon_select.value;
+
+        fetch('images/' + pokemon).then(function (response) {
+            response.json().then(function (data) {
+                pokemon_image.src = data.image;
+            })
+        });
+    }
+}

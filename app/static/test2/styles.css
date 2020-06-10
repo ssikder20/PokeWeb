@@ -15,6 +15,18 @@ form {
     text-align: center;
 }
 
+.animate {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.fadeInUp {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+}
+
 #home select {
     font-family: monospace;
     font-size: 18px;
@@ -40,16 +52,15 @@ form {
     text-align: center;
 }
 
-.animate {
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-}
-
-.fadeInUp {
-    -webkit-animation-name: fadeInUp;
-    animation-name: fadeInUp;
+#pokemon_image {
+    padding-top: 5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 15%;
+    width: 15%;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 @-webkit-keyframes fadeInUp {
