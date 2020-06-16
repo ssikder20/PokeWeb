@@ -12,7 +12,11 @@ def index():
 
     if request.method == 'POST':
         nat_dex = request.form.get('pokemon')
-        return redirect(url_for('get_pokemon_data', nat_dex=nat_dex))
+        
+        if nat_dex is None:
+            return("<h1>404 Error<h1></h2>You did not include a pokemon in the selection box</h2>")
+        else:
+            return redirect(url_for('get_pokemon_data', nat_dex=nat_dex))
 
     return render_template('home.html', generations=generations)
 

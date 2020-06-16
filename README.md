@@ -1,4 +1,4 @@
-# Bulbabadeia
+# [Bulbabadeia](https://bulbabadeia.herokuapp.com/)
 
 A bad Bulbapedia clone with less features and only pokemon :)
 
@@ -7,4 +7,7 @@ A bad Bulbapedia clone with less features and only pokemon :)
 * Pokepy
 
 ## Resources Used
-* [Miguel Grinberg's Mega Flask Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+* Stack Overflow
+* W3 Schools
+* Bulbapedia
+* PokeAPI
