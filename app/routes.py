@@ -25,7 +25,12 @@ def get_pokemon_data(nat_dex):
         name=data['name'], 
         dex=data['id'], 
         height=data['height'], 
-        weight=data['weight'])
+        weight=data['weight'],
+        image=pokemon_image(nat_dex),
+        types=data['types'],
+        abilities=data['abilities'],
+        stats=data['stats'],
+        type_eff=data['type effectiveness'])
 
 @app.route('/pokemon/<generation>')
 def get_pokemon(generation):

@@ -65,13 +65,6 @@ def get_type_effectiveness(arr):
     return type_effective
 
 def pokemon_image(nat_dex):
-    from pokepy import V2Client
-    import requests
-    from bs4 import BeautifulSoup
-
-    client = V2Client()
-    name = ''
-    
     name_hash = {
         772: 'Type: Null',
         112: 'Mr. Mime',
@@ -111,29 +104,76 @@ def pokemon_image(nat_dex):
         788: 'Tapu Fini',
     }
 
-    name = name_hash.get(nat_dex, client.get_pokemon(nat_dex).name.title())
+    from pokepy import V2Client
+    import requests
+    from bs4 import BeautifulSoup
+
+    client = V2Client()
+    name = name_hash.get(int(nat_dex), client.get_pokemon(nat_dex).name.title())
 
     wiki = requests.get(f"https://bulbapedia.bulbagarden.net/wiki/{name}_(Pok%C3%A9mon)")
     soup = BeautifulSoup(wiki.content, 'html.parser')
 
     image = soup.find('img', {'alt': name})
     
+    print(nat_dex)
+    print(name)
     return(f"https://{image.get('src')[2:]}")
 
 def pokemon_data(nat_dex):
     from pokepy import V2Client
 
+    name_hash = {
+        772: 'Type: Null',
+        112: 'Mr. Mime',
+        439: 'Mime Jr.',
+        29: 'Nidoran♀',
+        32: 'Nidoran♂',
+        784: 'Kommo-o',
+        783: 'Hakamo-o',
+        83: 'Farfetch\'d',
+        386: 'Deoxys',
+        413: 'Wormadam',
+        487: 'Giratina',
+        492: 'Shaymin',
+        550: 'Basculin',
+        555: 'Darmanitan',
+        641: 'Tornadus',
+        642: 'Thundurus',
+        645: 'Landorus',
+        647: 'Keldeo',
+        648: 'Meloetta',
+        669: 'Flabébé',
+        670: 'Floette',
+        671: 'Florges',
+        678: 'Meowstic',
+        681: 'Aegislash',
+        710: 'Pumpkaboo',
+        711: 'Gourgeist',
+        741: 'Oricorio',
+        745: 'Lycanroc',
+        746: 'Wishiwashi',
+        774: 'Minior',
+        778: 'Mimikyu',
+        782: 'Jangmo-o',
+        785: 'Tapu Koko',
+        786: 'Tapu Lele',
+        787: 'Tapu Bulu',
+        788: 'Tapu Fini',
+    }
     client = V2Client()
     pokemon = client.get_pokemon(nat_dex)
+    stats = [i.base_stat for i in pokemon.stats]
     
     pokeObj = {
         'id': nat_dex,
-        'name': pokemon.name.title(),
+        'name': name_hash.get(nat_dex, client.get_pokemon(nat_dex).name.title()),
         'height': pokemon.height,
         'weight': pokemon.weight,
-        'abilities': [i.ability.name.title() for i in pokemon.abilities], # parsing for descriptions would be very complex so just the name is fine for now
+        'abilities': [(i.ability.name.title(), i.is_hidden) for i in pokemon.abilities], # parsing for descriptions would be very complex so just the name is fine for now
         'types': [i.type.name.title() for i in pokemon.types],
-        'type effectiveness': {}
+        'type effectiveness': {},
+        'stats': {'HP': stats[0], 'Attack': stats[1], 'Defense': stats[2], 'Special Attack': stats[3], 'Special Defense': stats[4], 'Speed': stats[5]}
     }
 
     pokeObj['type effectiveness'] = get_type_effectiveness(pokeObj['types'])

@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href='static/img/pokeball_but_with_blue.svg'>
     <title>{{ name }}</title>
-
     <link rel="stylesheet" href="static/test1/styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 
 <style>
     * {
-        color: #F3F3F4;
-        background-color: #242423;
+        color: #242423;
     }
 
     body {
@@ -20,13 +20,334 @@
         font-family: 'Quicksand', sans-serif;
     }
 
-    #bulbabadeia_title {
+    header {
+        display: flex;
+        justify-content: center;
+    }
+
+    table,
+    th,
+    td {
+        border: 2px solid #242423;
+        background-color: #F3F3F4;
+    }
+
+    #title {
+        text-decoration: none;
+        transition: all 1s;
+        font-size: 48px;
+        color: #F3F3F4;
+    }
+
+    #title:hover {
+        color: #D5A021;
+        letter-spacing: 5px;
+    }
+
+    #infoTable {
+        padding: 2%;
+    }
+
+    #infoTable table img {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        display: block;
+    }
+
+    #radarChart {
+        width: 325px;
+        height: 325px;
+        overflow-x: auto;
+        padding: 2%;
+    }
+
+    #statsBox th,
+    #statsBox td {
         text-align: center;
+    }
+
+    #statsBox table,
+    #statsBox th,
+    #statsBox td {
+        border: 2px solid #242423;
+    }
+
+    #typeEffectiveness {
+        overflow-x: auto;
+    }
+
+    #typeEffectiveness table,
+    #typeEffectiveness th,
+    #typeEffectiveness td {
+        border: 2px solid #242423;
+        text-align: center;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-flow: row-reverse wrap;
+        justify-content: space-around;
+    }
+
+    .statInfo {
+        display: flex;
+        flex-flow: row-reverse wrap;
+        justify-content: space-around;
     }
 </style>
 
 <body>
-    <h1 id="bulbabadeia_title">{{ name }}</h1>
+    <header>
+        <h1><a href="https://bulbabadeia.herokuapp.com/" id="title">Bulbabadeia</a></h1>
+    </header>
+
+    <div class="flex-container">
+
+        <div id="infoTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="padding: 5px; font-size: 36px;" colspan="2">{{ name }}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <img src={{ image }} alt="image of {{ name }}">
+                        </td>
+                    </tr>
+                </thead>
+
+                {% if types|length == 1 %}
+                <tr>
+                    <th>Types</th>
+                    <td>{{ types[0] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <th rowspan="2">Types</th>
+                    <td>{{ types[0] }}</td>
+                </tr>
+                {% for type in types[1:] %}
+                <tr>
+                    <td>{{ type }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+
+                {% if abilities|length == 1 %}
+                <tr>
+                    <th>Abilities</th>
+                    <td>{{ abilities[0][0] }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <th rowspan="{{ abilities|length }}">Abilities</th>
+                    <td>{{ abilities[0][0] }}</td>
+                </tr>
+                {% for ability in abilities[1:] %}
+                <tr>
+                    {% if ability[1] == True %}
+                    <td>{{ ability[0] }} (Hidden)</td>
+                    {% else %}
+                    <td>{{ ability[0] }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+
+        <div id="typeEffectiveness">
+            <table>
+                <th style="padding: 5px; font-size: 24px;" colspan="1000">Type Effectiveness</th>
+
+                <tr>
+                    <th>Neutral</th>
+                    {% for type in type_eff['Neutral (1x)'] %}
+                    <td class="type">{{ type }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Weak</th>
+                    {% for type in type_eff['Weak (2x)'] %}
+                    <td class="type">{{ type }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Very Weak</th>
+                    {% for type in type_eff['Very Weak (4x)'] %}
+                    <td class="type">{{ type }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resistant</th>
+                    {% for type in type_eff['Resistant (0.5x)'] %}
+                    <td class="type">{{ type }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Very Resistant</th>
+                    {% for type in type_eff['Very Resistant (0.25x)'] %}
+                    <td class="type">{{ type }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Immune</th>
+                    {% for type in type_eff['Immune (0x)'] %}
+                    <td class="type">{{ type }}</td>
+                    {% endfor %}
+                </tr>
+            </table>
+        </div>
+
+        <div class="statInfo">
+            <div id="statsBox">
+                <table>
+                    <th style="padding: 5px; font-size: 24px;" colspan="2">{{ name }}'s Stats</th>
+
+                    <tr>
+                        <th>HP</th>
+                        <td>{{ stats['HP'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Attack</th>
+                        <td>{{ stats['Attack'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Defense</th>
+                        <td>{{ stats['Defense'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Special Attack</th>
+                        <td>{{ stats['Special Attack'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Special Defense</th>
+                        <td>{{ stats['Special Defense'] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Speed</th>
+                        <td>{{ stats['Speed'] }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="radarChart"></div>
+        </div>
+
+    </div>
 </body>
+
+<script type="text/javascript">
+    var arr = document.getElementsByClassName('type');
+
+    for (var i = 0, len = arr.length; i < len; i++) {
+        var node = arr[i];
+        var text_type = node.childNodes[0].nodeValue;
+
+        switch (text_type) {
+            case 'Normal':
+                node.style.backgroundColor = '#BCBCAE';
+                break;
+            case 'Fighting':
+                node.style.backgroundColor = '#A85545';
+                break;
+            case 'Poison':
+                node.style.backgroundColor = '#AB5DA2';
+                break;
+            case 'Psychic':
+                node.style.backgroundColor = '#FA65B5'
+                break;
+            case 'Grass':
+                node.style.backgroundColor = '#8DD851';
+                break;
+            case 'Ground':
+                node.style.backgroundColor = '#EDCB56';
+                break;
+            case 'Ice':
+                node.style.backgroundColor = '#96F1FF';
+                break;
+            case 'Rock':
+                node.style.backgroundColor = '#CEBD72';
+                break;
+            case 'Dragon':
+                node.style.backgroundColor = '#8975FF';
+                break;
+            case 'Water':
+                node.style.backgroundColor = '#57B0FF';
+                break;
+            case 'Bug':
+                node.style.backgroundColor = '#C2D21D';
+                break;
+            case 'Dark':
+                node.style.backgroundColor = '#8A6654';
+                break;
+            case 'Ghost':
+                node.style.backgroundColor = '#7874D5';
+                break;
+            case 'Steel':
+                node.style.backgroundColor = '#C4C2DB';
+                break;
+            case 'Flying':
+                node.style.backgroundColor = '#79A4FF';
+                break;
+            case 'Electric':
+                node.style.backgroundColor = '#FDE53C';
+                break;
+            case 'Fairy':
+                node.style.backgroundColor = '#FAADFF';
+                break;
+            case 'Fire':
+                node.style.backgroundColor = '#F17F2E';
+                break;
+
+            default:
+                break;
+        }
+
+        node.style.color = 'white';
+    }
+
+    var poke_stats = {{ stats| tojson }};
+    var poke_name = {{ name| tojson }};
+
+    radar = document.getElementById("radarChart");
+    data = [
+        {
+            type: 'scatterpolar',
+            r: [poke_stats['HP'], poke_stats['Attack'], poke_stats['Defense'], poke_stats['Special Attack'], poke_stats['Special Defense'], poke_stats['Speed']],
+            theta: ['HP', 'Atk', 'Def', 'Sp Atk', 'Sp Def', 'Spe'],
+            fill: 'toself',
+        },
+    ]
+
+    layout = {
+        title: poke_name + "'s Stats",
+        font: {
+            size: 16,
+            family: 'monospace',
+            color: '#242423'
+        },
+
+        polar: {
+            radialaxis: {
+                visible: true,
+                range: [0, 200]
+            }
+        },
+
+        paper_bgcolor: "rgba(243,243,244, 1)"
+    }
+
+    var config = {
+        responsive: true,
+        staticPlot: true
+    }
+
+    Plotly.newPlot(radar, data, layout, config)
+
+    var type = {{ types| tojson }};
+
+</script>
 
 </html>
