@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Bulbabadeia</title>
-    <link rel="icon" href='https://bulbabadeia.herokuapp.com/static/img/normal_pokeball.svg'>
+    <link rel="icon" href='static/img/normal_pokeball.svg'>
     <link rel="stylesheet" href="static/style/style.css">
 </head>
 
@@ -24,7 +24,7 @@
     <!--Select fields for generation and pokemon-->
     <form method="POST">
         <p>Generation:
-            <select id="generation" name="generation" method="GET" action="/">
+            <select id="generation" name="generation" method="GET" action="/" style="font-size: 18px;">
                 {% for generation in generations %}
                 <option value="{{ generation }}" SELECTED>{{ generation }}</option>
                 {% endfor %}
@@ -32,7 +32,7 @@
         </p>
 
         <p>Pokemon:
-            <select id="pokemon" name="pokemon" method="POST" action="/">
+            <select id="pokemon" name="pokemon" method="POST" action="/" style="font-size: 18px;">
                 {% for pokemon in pokemons %}
                 <option value="{{ pokemon }}" SELECTED>{{ pokemon }}</option>
                 {% endfor %}
